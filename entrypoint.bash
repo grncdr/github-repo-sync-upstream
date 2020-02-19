@@ -50,7 +50,7 @@ git remote add upstream "$UPSTREAM_REPO"
 git fetch upstream "${SOURCE_BRANCH}"
 git remote -v
 
-git checkout "upstream/${DESTINATION_BRANCH}"
+git checkout "upstream/${SOURCE_BRANCH}"
 git push --force origin "${DESTINATION_BRANCH}"
 
 git remote rm upstream
