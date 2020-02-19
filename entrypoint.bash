@@ -17,15 +17,21 @@ if [[ -n "$SSH_PRIVATE_KEY" ]]; then
 fi
 
 UPSTREAM_REPO=$1
-BRANCH_MAPPING=$2
+SOURCE_BRANCH=$2
+DESTINATION_BRANCH=$3
 
 if [[ -z "$UPSTREAM_REPO" ]]; then
   echo "Missing \$UPSTREAM_REPO"
   exit 1
 fi
 
-if [[ -z "$BRANCH_MAPPING" ]]; then
-  echo "Missing \$SOURCE_BRANCH:\$DESTINATION_BRANCH"
+if [[ -z "$SOURCE_BRANCH" ]]; then
+  echo "Missing SOURCE_BRANCH"
+  exit 1
+fi
+
+if [[ -z "$DESTINATION_BRANCH" ]]; then
+  echo "Missing DESTINATION_BRANCH"
   exit 1
 fi
 
@@ -41,11 +47,11 @@ git config user.email "${GITHUB_ACTOR}@users.noreply.github.com"
 git remote set-url origin "https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
 
 git remote add upstream "$UPSTREAM_REPO"
-git fetch upstream "${BRANCH_MAPPING%%:*}"
+git fetch upstream "${SOURCE_BRANCH}"
 git remote -v
 
-git rebase --autosquash --autostash "upstream/${BRANCH_MAPPING%%:*}"
-git push --force origin "${BRANCH_MAPPING#*:}"
+git checkout "upstream/${DESTINATION_BRANCH}"
+git push --force origin "${DESTINATION_BRANCH}"
 
 git remote rm upstream
 git remote -v
