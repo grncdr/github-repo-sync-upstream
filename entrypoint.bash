@@ -51,7 +51,7 @@ git fetch upstream "${SOURCE_BRANCH}"
 git remote -v
 
 git checkout "upstream/${SOURCE_BRANCH}"
-git push --force origin "${DESTINATION_BRANCH}"
+git push --force origin "HEAD:${DESTINATION_BRANCH}"
 
 git remote rm upstream
 git remote -v
