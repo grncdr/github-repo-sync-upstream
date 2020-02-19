@@ -18,7 +18,8 @@ runs:
   image: 'Dockerfile'
   args:
     - ${{ inputs.source_repo }}
-    - ${{ inputs.source_branch }}:${{ inputs.destination_branch }}
+    - ${{ inputs.source_branch }}
+    - ${{ inputs.destination_branch }}
 
 branding:
   icon: 'git-merge'
